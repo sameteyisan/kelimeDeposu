@@ -9,11 +9,4 @@ Icon icon = Icon(
 TextStyle textStyle =
     TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 16);
 
-Icon iconHippo = Icon(
-  LineAwesomeIcons.hippo,
-  color: Colors.red[700],
-);
-Icon iconHorse = Icon(
-  LineAwesomeIcons.horse,
-  color: Colors.green[700],
-);
+EdgeInsets paddingAll = EdgeInsets.only(bottom: 60);

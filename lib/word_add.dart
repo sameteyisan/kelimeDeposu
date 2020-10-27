@@ -1,5 +1,6 @@
 import 'package:KelimeWord/ortak.dart';
 import 'package:KelimeWord/sqflite.dart';
+import 'package:flushbar/flushbar.dart';
 import 'package:flutter/material.dart';
 import 'package:line_awesome_flutter/line_awesome_flutter.dart';
 
@@ -42,200 +43,202 @@ class _WordAddState extends State<WordAdd> {
         backgroundColor: Colors.deepOrange,
         title: Text('Kelime Ekle'),
       ),
-      body: Center(
-        child: ListView(
-          shrinkWrap: true,
-          padding: const EdgeInsets.all(8.0),
-          children: [
-            SizedBox(
-                width: 100,
-                height: 100,
-                child: Image.asset('asset/english.png')),
-            Divider(
-              height: 20,
-              indent: 500.0,
-            ),
-            Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    buildSpacer(),
-                    Container(
-                      width: MediaQuery.of(context).size.width - 100,
-                      height: 70,
-                      child: TextField(
-                        onChanged: (value) {
-                          setState(() {
-                            kelime = kelime;
-                          });
-                        },
-                        focusNode: kelimeFocus,
-                        textInputAction: TextInputAction.next,
-                        onSubmitted: (a) {
-                          _focusGecis(context, kelimeFocus, birinciAnlamFocus);
-                        },
-                        controller: kelime,
-                        decoration: InputDecoration(
-                            icon: icon,
-                            border: OutlineInputBorder(
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(20)),
-                                borderSide: BorderSide(
-                                  width: 0.5,
-                                )),
-                            hintText: 'Türkçe Karşılığı',
-                            labelText: 'Kelime*'),
-                      ),
-                    ),
-                    Text('  '),
-                    buildAnimatedCrossFade(kelime.text),
-                    buildSpacer(),
-                  ],
-                ),
-                buildDivider(),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    buildSpacer(),
-                    Container(
-                      width: MediaQuery.of(context).size.width - 100,
-                      height: 70,
-                      child: TextField(
-                        onChanged: (value) {
-                          setState(() {
-                            birinciAnlam = birinciAnlam;
-                          });
-                        },
-                        focusNode: birinciAnlamFocus,
-                        controller: birinciAnlam,
-                        textInputAction: TextInputAction.next,
-                        onSubmitted: (a) {
-                          _focusGecis(
-                              context, birinciAnlamFocus, ikinciAnlamFocus);
-                        },
-                        decoration: InputDecoration(
-                            icon: icon,
-                            border: OutlineInputBorder(
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(20)),
-                                borderSide: BorderSide(width: 0.5)),
-                            hintText: 'İngilizce Karşılığı',
-                            labelText: 'İngilizcesi*'),
-                      ),
-                    ),
-                    Text('  '),
-                    buildAnimatedCrossFade(birinciAnlam.text),
-                    buildSpacer(),
-                  ],
-                ),
-                buildDivider(),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    buildSpacer(),
-                    Container(
-                      width: MediaQuery.of(context).size.width - 100,
-                      height: 70,
-                      child: TextField(
-                        onChanged: (value) {
-                          setState(() {
-                            ikinciAnlam = ikinciAnlam;
-                          });
-                        },
-                        focusNode: ikinciAnlamFocus,
-                        controller: ikinciAnlam,
-                        textInputAction: TextInputAction.done,
-                        decoration: InputDecoration(
-                            icon: icon,
-                            border: OutlineInputBorder(
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(20)),
-                                borderSide: BorderSide(width: 0.5)),
-                            hintText: 'Diğer İngilizce Karşılığı',
-                            labelText: 'Varsa Diğer Karşılığı'),
-                      ),
-                    ),
-                    Text('  '),
-                    buildAnimatedCrossFade(ikinciAnlam.text),
-                    buildSpacer(),
-                  ],
-                ),
-                buildDivider(),
-                AnimatedCrossFade(
-                    firstChild: Container(
-                      decoration: BoxDecoration(
-                          color: Colors.green,
-                          borderRadius: BorderRadius.circular(20)),
-                      child: FlatButton(
-                        padding: const EdgeInsets.all(15),
-                        child: Text(
-                          '  Kelime Haznenize Ekleyin  ',
-                          style: textStyle,
+      body: Padding(
+        padding: paddingAll,
+        child: Center(
+          child: ListView(
+            shrinkWrap: true,
+            padding: const EdgeInsets.all(8.0),
+            children: [
+              SizedBox(
+                  width: 100,
+                  height: 100,
+                  child: Image.asset('asset/english.png')),
+              Divider(
+                height: 20,
+                indent: 500.0,
+              ),
+              Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      buildSpacer(),
+                      Container(
+                        width: MediaQuery.of(context).size.width - 100,
+                        height: 70,
+                        child: TextField(
+                          onChanged: (value) {
+                            setState(() {
+                              kelime = kelime;
+                            });
+                          },
+                          focusNode: kelimeFocus,
+                          textInputAction: TextInputAction.next,
+                          onSubmitted: (a) {
+                            _focusGecis(
+                                context, kelimeFocus, birinciAnlamFocus);
+                          },
+                          controller: kelime,
+                          decoration: InputDecoration(
+                              icon: icon,
+                              border: OutlineInputBorder(
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(20)),
+                                  borderSide: BorderSide(
+                                    width: 0.5,
+                                  )),
+                              hintText: 'Türkçe Karşılığı',
+                              labelText: 'Kelime*'),
                         ),
-                        onPressed: () async {
-                          gonderilen = TaskModel(
-                            kelime: kelime.text,
-                            karsilik1: birinciAnlam.text,
-                            karsilik2: ikinciAnlam.text,
-                          );
-                          await _todoHelper.insertTask(gonderilen);
-                          _snackbarKey.currentState.showSnackBar(SnackBar(
-                            backgroundColor: Colors.green,
-                            content: Row(
-                              children: [
-                                Icon(LineAwesomeIcons.check),
-                                Text(
-                                  ' Kelime Haznenize Eklendi.',
-                                  style: TextStyle(fontWeight: FontWeight.bold),
-                                )
-                              ],
-                            ),
-                            duration: Duration(seconds: 1),
-                          ));
-                          setState(() {
-                            kelime.clear();
-                            birinciAnlam.clear();
-                            ikinciAnlam.clear();
-                          });
-                        },
                       ),
-                    ),
-                    secondChild: Container(
-                      decoration: BoxDecoration(
-                          color: Colors.red,
-                          borderRadius: BorderRadius.circular(20)),
-                      child: FlatButton(
-                        padding: const EdgeInsets.all(15),
-                        child: Text('Gerekli Alanları Doldurunuz',
-                            style: textStyle),
-                        onPressed: () {
-                          _snackbarKey.currentState.showSnackBar(SnackBar(
-                            backgroundColor: Colors.red,
-                            content: Text(
-                              'Gerekli Alanları Doldurunuz.',
-                              style: TextStyle(fontWeight: FontWeight.bold),
-                            ),
-                            duration: Duration(milliseconds: 200),
-                          ));
-                        },
+                      Text('  '),
+                      buildAnimatedCrossFade(kelime.text),
+                      buildSpacer(),
+                    ],
+                  ),
+                  buildDivider(),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      buildSpacer(),
+                      Container(
+                        width: MediaQuery.of(context).size.width - 100,
+                        height: 70,
+                        child: TextField(
+                          onChanged: (value) {
+                            setState(() {
+                              birinciAnlam = birinciAnlam;
+                            });
+                          },
+                          focusNode: birinciAnlamFocus,
+                          controller: birinciAnlam,
+                          textInputAction: TextInputAction.next,
+                          onSubmitted: (a) {
+                            _focusGecis(
+                                context, birinciAnlamFocus, ikinciAnlamFocus);
+                          },
+                          decoration: InputDecoration(
+                              icon: icon,
+                              border: OutlineInputBorder(
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(20)),
+                                  borderSide: BorderSide(width: 0.5)),
+                              hintText: 'İngilizce Karşılığı',
+                              labelText: 'İngilizcesi*'),
+                        ),
                       ),
-                    ),
-                    duration: const Duration(milliseconds: 500),
-                    crossFadeState: kelime.text.length == 0 ||
-                            birinciAnlam.text.length == 0 ||
-                            kelime.text.length > 15 ||
-                            birinciAnlam.text.length > 15 ||
-                            ikinciAnlam.text.length > 15
-                        ? CrossFadeState.showSecond
-                        : CrossFadeState.showFirst),
-              ],
-            ),
-          ],
+                      Text('  '),
+                      buildAnimatedCrossFade(birinciAnlam.text),
+                      buildSpacer(),
+                    ],
+                  ),
+                  buildDivider(),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      buildSpacer(),
+                      Container(
+                        width: MediaQuery.of(context).size.width - 100,
+                        height: 70,
+                        child: TextField(
+                          onChanged: (value) {
+                            setState(() {
+                              ikinciAnlam = ikinciAnlam;
+                            });
+                          },
+                          focusNode: ikinciAnlamFocus,
+                          controller: ikinciAnlam,
+                          textInputAction: TextInputAction.done,
+                          decoration: InputDecoration(
+                              icon: icon,
+                              border: OutlineInputBorder(
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(20)),
+                                  borderSide: BorderSide(width: 0.5)),
+                              hintText: 'Diğer İngilizce Karşılığı',
+                              labelText: 'Varsa Diğer Karşılığı'),
+                        ),
+                      ),
+                      Text('  '),
+                      buildAnimatedCrossFade(ikinciAnlam.text),
+                      buildSpacer(),
+                    ],
+                  ),
+                  buildDivider(),
+                  AnimatedCrossFade(
+                      firstChild: Container(
+                        decoration: BoxDecoration(
+                            color: Colors.green,
+                            borderRadius: BorderRadius.circular(20)),
+                        child: FlatButton(
+                          padding: const EdgeInsets.all(15),
+                          child: Text(
+                            '  Kelime Haznenize Ekleyin  ',
+                            style: textStyle,
+                          ),
+                          onPressed: () async {
+                            gonderilen = TaskModel(
+                              kelime: kelime.text,
+                              karsilik1: birinciAnlam.text,
+                              karsilik2: ikinciAnlam.text,
+                            );
+                            await _todoHelper.insertTask(gonderilen);
+                            flushbar(context, 'İşlem Başarılı',
+                                'Kelime haznenize eklendi.', Colors.green);
+                            setState(() {
+                              kelime.clear();
+                              birinciAnlam.clear();
+                              ikinciAnlam.clear();
+                            });
+                          },
+                        ),
+                      ),
+                      secondChild: Container(
+                        decoration: BoxDecoration(
+                            color: Colors.red,
+                            borderRadius: BorderRadius.circular(20)),
+                        child: FlatButton(
+                          padding: const EdgeInsets.all(15),
+                          child: Text('Gerekli Alanları Doldurunuz',
+                              style: textStyle),
+                          onPressed: () {
+                            flushbar(context, 'İşlem Başarısız.',
+                                'Gerekli alanları doldurunuz.', Colors.red);
+                          },
+                        ),
+                      ),
+                      duration: const Duration(milliseconds: 500),
+                      crossFadeState: kelime.text.length == 0 ||
+                              birinciAnlam.text.length == 0 ||
+                              kelime.text.length > 15 ||
+                              birinciAnlam.text.length > 15 ||
+                              ikinciAnlam.text.length > 15
+                          ? CrossFadeState.showSecond
+                          : CrossFadeState.showFirst),
+                ],
+              ),
+            ],
+          ),
         ),
       ),
     );
+  }
+
+  Flushbar flushbar(
+      BuildContext context, String title, String message, Color color) {
+    return Flushbar(
+      boxShadows: [
+        BoxShadow(
+            color: Colors.deepOrange, offset: Offset(0.0, 2.0), blurRadius: 3.0)
+      ],
+      backgroundGradient: LinearGradient(colors: [Colors.deepOrange, color]),
+      flushbarPosition: FlushbarPosition.TOP,
+      title: title,
+      message: message,
+      duration: Duration(seconds: 1),
+    )..show(context);
   }
 
   Spacer buildSpacer() {

@@ -36,10 +36,14 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+  static const MobileAdTargetingInfo targetingInfo = MobileAdTargetingInfo(
+    nonPersonalizedAds: true,
+  );
   InterstitialAd myInterstitial;
   InterstitialAd buildInterstitialAd() {
     return InterstitialAd(
-      adUnitId: InterstitialAd.testAdUnitId,
+      adUnitId: 'ca-app-pub-4589290119610129/7791901552',
+      targetingInfo: targetingInfo,
       listener: (MobileAdEvent event) {
         if (event == MobileAdEvent.failedToLoad) {
           myInterstitial..load();
@@ -67,7 +71,9 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   void initState() {
     super.initState();
-    FirebaseAdMob.instance.initialize(appId: FirebaseAdMob.testAppId);
+
+    FirebaseAdMob.instance
+        .initialize(appId: 'ca-app-pub-4589290119610129~6255620307');
     myBanner = buildBannerAd()..load();
     myInterstitial = buildInterstitialAd()..load();
   }
@@ -83,8 +89,9 @@ class _MyHomePageState extends State<MyHomePage> {
 
   BannerAd buildBannerAd() {
     return BannerAd(
-        adUnitId: BannerAd.testAdUnitId,
-        size: AdSize.banner,
+        targetingInfo: targetingInfo,
+        adUnitId: 'ca-app-pub-4589290119610129/8889183198',
+        size: AdSize.fullBanner,
         listener: (MobileAdEvent event) {
           if (event == MobileAdEvent.loaded) {
             myBanner..show();
@@ -94,6 +101,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
+    dynamic abs = buildInterstitialAd()..load();
     final TodoHelper th = TodoHelper();
     return Scaffold(
         appBar: AppBar(
@@ -102,66 +110,74 @@ class _MyHomePageState extends State<MyHomePage> {
           centerTitle: true,
           title: Text('Kelime Deposu'),
         ),
-        body: Center(
-          child: ListView(
-            shrinkWrap: true,
-            children: [
-              Column(
-                children: <Widget>[
-                  SizedBox(
-                    width: MediaQuery.of(context).size.width - 50,
-                    child: Image.asset('asset/english.png'),
-                  ),
-                  Divider(
-                    height: 20,
-                    indent: 500.0,
-                  ),
-                  Container(
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(20),
-                        color: Colors.green),
-                    child: FlatButton(
-                      child: Text(
-                        '  Yeni Kelime Ekle  ',
-                        style: textStyle,
-                      ),
-                      onPressed: () async {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(builder: (context) => WordAdd()),
-                        );
-                      },
+        body: Padding(
+          padding: paddingAll,
+          child: Center(
+            child: ListView(
+              shrinkWrap: true,
+              children: [
+                Column(
+                  children: <Widget>[
+                    SizedBox(
+                      width: MediaQuery.of(context).size.width - 50,
+                      child: Image.asset('asset/english.png'),
                     ),
-                  ),
-                  Divider(
-                    height: 30,
-                    indent: 500.0,
-                  ),
-                  Container(
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(20),
-                        color: Colors.deepOrange),
-                    child: FlatButton(
-                      child: Text(
-                        'Kelimelerim',
-                        style: textStyle,
-                      ),
-                      onPressed: () async {
-                        List<TaskModel> listx = await th.getAllTask();
-                        setState(() {
-                          kelimeHaznem = listx;
-                        });
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(builder: (context) => MyWords()),
-                        );
-                      },
+                    Divider(
+                      height: 20,
+                      indent: 500.0,
                     ),
-                  ),
-                ],
-              ),
-            ],
+                    Container(
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(20),
+                          color: Colors.green),
+                      child: FlatButton(
+                        child: Text(
+                          '  Yeni Kelime Ekle  ',
+                          style: textStyle,
+                        ),
+                        onPressed: () async {
+                          abs..show();
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(builder: (context) => WordAdd()),
+                          );
+                        },
+                      ),
+                    ),
+                    Divider(
+                      height: 30,
+                      indent: 500.0,
+                    ),
+                    Container(
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(20),
+                          color: Colors.deepOrange),
+                      child: FlatButton(
+                        child: Text(
+                          'Kelimelerim',
+                          style: textStyle,
+                        ),
+                        onPressed: () async {
+                          abs..show();
+                          List<TaskModel> listx = await th.getAllTask();
+                          setState(() {
+                            kelimeHaznem = listx;
+                          });
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(builder: (context) => MyWords()),
+                          );
+                        },
+                      ),
+                    ),
+                  ],
+                ),
+              ],
+            ),
           ),
         ));
   }
 }
+/*buildInterstitialAd()
+                          ..load()
+                          ..show() */

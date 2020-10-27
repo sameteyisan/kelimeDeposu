@@ -1,0 +1,41 @@
+{
+  "project_info": {
+    "project_number": "583500198345",
+    "firebase_url": "https://appa-7ab0b.firebaseio.com",
+    "project_id": "appa-7ab0b",
+    "storage_bucket": "appa-7ab0b.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:583500198345:android:6da2c86eca50ec1acb7818",
+        "android_client_info": {
+          "package_name": "com.sameteyisan.kelimeDeposu"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "583500198345-6m19q606lfef0n1o641k16316fsjutfi.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCkUaKNjjAeskMJO8FSlHGPLw--VRjRzuk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "583500198345-6m19q606lfef0n1o641k16316fsjutfi.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      },
+      "admob_app_id": "ca-app-pub-4589290119610129~6255620307"
+    }
+  ],
+  "configuration_version": "1"
+}
